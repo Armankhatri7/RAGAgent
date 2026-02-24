@@ -1,0 +1,8 @@
+langchain
+langgraph
+langchain-openai
+langchain-community
+supabase
+tavily-python
+pypdf
+python-dotenv
