@@ -1,6 +1,6 @@
 langchain
 langgraph
-langchain-openai
+langchain-google-genai
 langchain-community
 supabase
 tavily-python
