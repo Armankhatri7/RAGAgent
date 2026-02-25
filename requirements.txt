@@ -1,130 +1,1 @@
-﻿aiohappyeyeballs==2.6.1
-aiohttp==3.13.3
-aiosignal==1.4.0
-altair==6.0.0
-annotated-doc==0.0.4
-annotated-types==0.7.0
-anyio==4.12.1
-attrs==25.4.0
-blinker==1.9.0
-cachetools==6.2.6
-certifi==2026.1.4
-cffi==2.0.0
-charset-normalizer==3.4.4
-click==8.3.1
-colorama==0.4.6
-cryptography==46.0.5
-dataclasses-json==0.6.7
-deprecation==2.1.0
-distro==1.9.0
-fastapi==0.133.0
-filetype==1.2.0
-frozenlist==1.8.0
-fsspec==2026.2.0
-gitdb==4.0.12
-GitPython==3.1.46
-google-auth==2.48.0
-google-genai==1.64.0
-greenlet==3.3.2
-h11==0.16.0
-h2==4.3.0
-hpack==4.1.0
-httpcore==1.0.9
-httptools==0.7.1
-httpx==0.28.1
-httpx-sse==0.4.3
-hyperframe==6.1.0
-idna==3.11
-Jinja2==3.1.6
-jiter==0.13.0
-jsonpatch==1.33
-jsonpointer==3.0.0
-jsonschema==4.26.0
-jsonschema-specifications==2025.9.1
-langchain==1.2.10
-langchain-classic==1.0.1
-langchain-community==0.4.1
-langchain-core==1.2.15
-langchain-google-genai==4.2.1
-langchain-openai==1.1.10
-langchain-text-splitters==1.1.1
-langgraph==1.0.9
-langgraph-checkpoint==4.0.0
-langgraph-prebuilt==1.0.8
-langgraph-sdk==0.3.8
-langsmith==0.7.6
-markdown-it-py==4.0.0
-MarkupSafe==3.0.3
-marshmallow==3.26.2
-mdurl==0.1.2
-mmh3==5.2.0
-multidict==6.7.1
-mypy_extensions==1.1.0
-narwhals==2.17.0
-numpy==2.4.2
-openai==2.23.0
-orjson==3.11.7
-ormsgpack==1.12.2
-packaging==26.0
-pandas==2.3.3
-pillow==12.1.1
-postgrest==2.28.0
-propcache==0.4.1
-protobuf==6.33.5
-pyarrow==23.0.1
-pyasn1==0.6.2
-pyasn1_modules==0.4.2
-pycparser==3.0
-pydantic==2.12.5
-pydantic-settings==2.13.1
-pydantic_core==2.41.5
-pydeck==0.9.1
-Pygments==2.19.2
-pyiceberg==0.11.0
-PyJWT==2.11.0
-pyparsing==3.3.2
-pypdf==6.7.2
-pyroaring==1.0.3
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
-pytz==2025.2
-PyYAML==6.0.3
-realtime==2.28.0
-referencing==0.37.0
-regex==2026.2.19
-requests==2.32.5
-requests-toolbelt==1.0.0
-rich==14.3.3
-rpds-py==0.30.0
-rsa==4.9.1
-six==1.17.0
-smmap==5.0.2
-sniffio==1.3.1
-SQLAlchemy==2.0.46
-starlette==0.52.1
-storage3==2.28.0
-streamlit==1.54.0
-StrEnum==0.4.15
-strictyaml==1.7.3
-supabase==2.28.0
-supabase-auth==2.28.0
-supabase-functions==2.28.0
-tavily-python==0.7.21
-tenacity==9.1.4
-tiktoken==0.12.0
-toml==0.10.2
-tornado==6.5.4
-tqdm==4.67.3
-typing-inspect==0.9.0
-typing-inspection==0.4.2
-typing_extensions==4.15.0
-tzdata==2025.3
-urllib3==2.6.3
-uuid_utils==0.14.1
-uvicorn==0.41.0
-watchdog==6.0.0
-watchfiles==1.1.1
-websockets==15.0.1
-xxhash==3.6.0
-yarl==1.22.0
-zstandard==0.25.0
+ a i o h a p p y e y e b a l l s = = 2 . 6 . 1   a i o h t t p = = 3 . 1 3 . 3   a i o s i g n a l = = 1 . 4 . 0   a l t a i r = = 6 . 0 . 0   a n n o t a t e d - d o c = = 0 . 0 . 4   a n n o t a t e d - t y p e s = = 0 . 7 . 0   a n y i o = = 4 . 1 2 . 1   a t t r s = = 2 5 . 4 . 0   b l i n k e r = = 1 . 9 . 0   c a c h e t o o l s = = 6 . 2 . 6   c e r t i f i = = 2 0 2 6 . 1 . 4   c f f i = = 2 . 0 . 0   c h a r s e t - n o r m a l i z e r = = 3 . 4 . 4   c l i c k = = 8 . 3 . 1   c o l o r a m a = = 0 . 4 . 6   c r y p t o g r a p h y = = 4 6 . 0 . 5   d a t a c l a s s e s - j s o n = = 0 . 6 . 7   d e p r e c a t i o n = = 2 . 1 . 0   d i s t r o = = 1 . 9 . 0   f a s t a p i = = 0 . 1 3 3 . 0   f i l e t y p e = = 1 . 2 . 0   f r o z e n l i s t = = 1 . 8 . 0   f s s p e c = = 2 0 2 6 . 2 . 0   g i t d b = = 4 . 0 . 1 2   G i t P y t h o n = = 3 . 1 . 4 6   g o o g l e - a u t h = = 2 . 4 8 . 0   g o o g l e - g e n a i = = 1 . 6 4 . 0   g r e e n l e t = = 3 . 3 . 2   h 1 1 = = 0 . 1 6 . 0   h 2 = = 4 . 3 . 0   h p a c k = = 4 . 1 . 0   h t t p c o r e = = 1 . 0 . 9   h t t p t o o l s = = 0 . 7 . 1   h t t p x = = 0 . 2 8 . 1   h t t p x - s s e = = 0 . 4 . 3   h y p e r f r a m e = = 6 . 1 . 0   i d n a = = 3 . 1 1   J i n j a 2 = = 3 . 1 . 6   j i t e r = = 0 . 1 3 . 0   j s o n p a t c h = = 1 . 3 3   j s o n p o i n t e r = = 3 . 0 . 0   j s o n s c h e m a = = 4 . 2 6 . 0   j s o n s c h e m a - s p e c i f i c a t i o n s = = 2 0 2 5 . 9 . 1   l a n g c h a i n = = 1 . 2 . 1 0   l a n g c h a i n - c l a s s i c = = 1 . 0 . 1   l a n g c h a i n - c o m m u n i t y = = 0 . 4 . 1   l a n g c h a i n - c o r e = = 1 . 2 . 1 5   l a n g c h a i n - g o o g l e - g e n a i = = 4 . 2 . 1   l a n g c h a i n - o p e n a i = = 1 . 1 . 1 0   l a n g c h a i n - t e x t - s p l i t t e r s = = 1 . 1 . 1   l a n g g r a p h = = 1 . 0 . 9   l a n g g r a p h - c h e c k p o i n t = = 4 . 0 . 0   l a n g g r a p h - p r e b u i l t = = 1 . 0 . 8   l a n g g r a p h - s d k = = 0 . 3 . 8   l a n g s m i t h = = 0 . 7 . 6   m a r k d o w n - i t - p y = = 4 . 0 . 0   M a r k u p S a f e = = 3 . 0 . 3   m a r s h m a l l o w = = 3 . 2 6 . 2   m d u r l = = 0 . 1 . 2   m m h 3 = = 5 . 2 . 0   m u l t i d i c t = = 6 . 7 . 1   m y p y _ e x t e n s i o n s = = 1 . 1 . 0   n a r w h a l s = = 2 . 1 7 . 0   n u m p y = = 2 . 4 . 2   o p e n a i = = 2 . 2 3 . 0   o r j s o n = = 3 . 1 1 . 7   o r m s g p a c k = = 1 . 1 2 . 2   p a c k a g i n g = = 2 6 . 0   p a n d a s = = 2 . 3 . 3   p i l l o w = = 1 2 . 1 . 1   p o s t g r e s t = = 2 . 2 8 . 0   p r o p c a c h e = = 0 . 4 . 1   p r o t o b u f = = 6 . 3 3 . 5   p y a r r o w = = 2 3 . 0 . 1   p y a s n 1 = = 0 . 6 . 2   p y a s n 1 _ m o d u l e s = = 0 . 4 . 2   p y c p a r s e r = = 3 . 0   p y d a n t i c = = 2 . 1 2 . 5   p y d a n t i c - s e t t i n g s = = 2 . 1 3 . 1   p y d a n t i c _ c o r e = = 2 . 4 1 . 5   p y d e c k = = 0 . 9 . 1   P y g m e n t s = = 2 . 1 9 . 2   p y i c e b e r g = = 0 . 1 1 . 0   P y J W T = = 2 . 1 1 . 0   p y p a r s i n g = = 3 . 3 . 2   p y p d f = = 6 . 7 . 2   p y r o a r i n g = = 1 . 0 . 3   p y t h o n - d a t e u t i l = = 2 . 9 . 0 . p o s t 0   p y t h o n - d o t e n v = = 1 . 2 . 1   p y t z = = 2 0 2 5 . 2   P y Y A M L = = 6 . 0 . 3   r e a l t i m e = = 2 . 2 8 . 0   r e f e r e n c i n g = = 0 . 3 7 . 0   r e g e x = = 2 0 2 6 . 2 . 1 9   r e q u e s t s = = 2 . 3 2 . 5   r e q u e s t s - t o o l b e l t = = 1 . 0 . 0   r i c h = = 1 4 . 3 . 3   r p d s - p y = = 0 . 3 0 . 0   r s a = = 4 . 9 . 1   s i x = = 1 . 1 7 . 0   s m m a p = = 5 . 0 . 2   s n i f f i o = = 1 . 3 . 1   S Q L A l c h e m y = = 2 . 0 . 4 6   s t a r l e t t e = = 0 . 5 2 . 1   s t o r a g e 3 = = 2 . 2 8 . 0   s t r e a m l i t = = 1 . 5 4 . 0   S t r E n u m = = 0 . 4 . 1 5   s t r i c t y a m l = = 1 . 7 . 3   s u p a b a s e = = 2 . 2 8 . 0   s u p a b a s e - a u t h = = 2 . 2 8 . 0   s u p a b a s e - f u n c t i o n s = = 2 . 2 8 . 0   t a v i l y - p y t h o n = = 0 . 7 . 2 1   t e n a c i t y = = 9 . 1 . 4   t i k t o k e n = = 0 . 1 2 . 0   t o m l = = 0 . 1 0 . 2   t o r n a d o = = 6 . 5 . 4   t q d m = = 4 . 6 7 . 3   t y p i n g - i n s p e c t = = 0 . 9 . 0   t y p i n g - i n s p e c t i o n = = 0 . 4 . 2   t y p i n g _ e x t e n s i o n s = = 4 . 1 5 . 0   t z d a t a = = 2 0 2 5 . 3   u r l l i b 3 = = 2 . 6 . 3   u u i d _ u t i l s = = 0 . 1 4 . 1   u v i c o r n = = 0 . 4 1 . 0   w a t c h d o g = = 6 . 0 . 0   w a t c h f i l e s = = 1 . 1 . 1   w e b s o c k e t s = = 1 5 . 0 . 1   x x h a s h = = 3 . 6 . 0   y a r l = = 1 . 2 2 . 0   z s t a n d a r d = = 0 . 2 5 . 0   
