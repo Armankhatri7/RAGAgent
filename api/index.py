@@ -1,37 +1,19 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import sys
 import os
 
-# Add the root directory to path so we can import main.py
+# Link to your main logic in the root
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from main import graph
 
 app = FastAPI()
 
-# Add CORS so your Streamlit app can talk to this API
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.get("/api/python")
-def hello_world():
-    return {"message": "Hello from FastAPI on Vercel!"}
+class ChatRequest(BaseModel):
+    query: str
 
 @app.post("/api/chat")
-async def chat(data: dict):
-    query = data.get("query")
-    if not query:
-        return {"error": "No query provided"}
-    
-    # Invoke your LangGraph
-    # Note: Use .invoke() if your nodes are synchronous, .ainvoke() if async
-    result = graph.invoke({"query": query})
-    
-    return {
-        "answer": result.get("answer"),
-        "source": result.get("source")
-    }
+async def chat(request: ChatRequest):
+    # This invokes your LangGraph workflow
+    result = graph.invoke({"query": request.query})
+    return result
