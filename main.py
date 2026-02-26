@@ -80,10 +80,10 @@ workflow.add_conditional_edges(
 workflow.add_edge("retrieve", END)
 workflow.add_edge("web_search", END)
 
-app = workflow.compile()
+graph = workflow.compile()
 
 # 5. Execute
 if __name__ == "__main__":
     query = input("\nHi! Ask me something about your PDF or the world: ")
-    output = app.invoke({"query": query})
+    output = graph.invoke({"query": query})
     print(f"\n[Source: {output['source']}]\nAnswer: {output['answer']}")
