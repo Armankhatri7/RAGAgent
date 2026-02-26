@@ -3,7 +3,7 @@ from typing import TypedDict
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import SupabaseVectorStore
-from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_tavily import TavilySearch
 from langgraph.graph import StateGraph, END
 from supabase.client import create_client
 
@@ -19,7 +19,7 @@ class AgentState(TypedDict):
 supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_SERVICE_KEY"))
 embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 vectorstore = SupabaseVectorStore(client=supabase, embedding=embeddings, table_name="documents", query_name="match_documents")
-search_tool = TavilySearchResults(k=3)
+search_tool = TavilySearch(k=3)
 model = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
 # 3. Define Nodes
