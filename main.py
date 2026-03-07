@@ -1,5 +1,5 @@
 import os
-from typing import TypedDict
+from typing import TypedDict, Optional, List
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import SupabaseVectorStore
@@ -14,32 +14,79 @@ class AgentState(TypedDict):
     query: str
     answer: str
     source: str
+    session_id: str
+    chat_history: List[dict]  # [{"role": "user"/"assistant", "content": "..."}]
 
 # 2. Setup Tools
 supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_SERVICE_KEY"))
 embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 vectorstore = SupabaseVectorStore(client=supabase, embedding=embeddings, table_name="documents", query_name="match_documents")
 search_tool = TavilySearch(k=3)
-model = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+model = ChatGoogleGenerativeAI(model="gemma-3-4b-it")
 
 # 3. Define Nodes
+def format_chat_history(chat_history: list, max_turns: int = 10) -> str:
+    """Format recent chat history into a readable string for the LLM"""
+    if not chat_history:
+        return ""
+    recent = chat_history[-(max_turns * 2):]  # Keep last N turns (user+assistant pairs)
+    lines = []
+    for msg in recent:
+        role = "User" if msg["role"] == "user" else "Assistant"
+        lines.append(f"{role}: {msg['content']}")
+    return "\n".join(lines)
+
+def get_document_summaries(session_id: str):
+    """Fetch document summaries for the current session only"""
+    response = (
+        supabase.table("document_summaries")
+        .select("filename, summary")
+        .eq("session_id", session_id)
+        .execute()
+    )
+    return response.data or []
+
 def router(state: AgentState):
-    """Decides whether to search the PDF or the Web"""
-    prompt = f"Analyze this query: '{state['query']}'. Is this a question likely answered in a specific uploaded document? Answer with ONLY 'PDF' or 'WEB'."
+    """Decides whether to search the PDF or the Web using document summaries as context"""
+    summaries = get_document_summaries(state['session_id'])
+    
+    if not summaries:
+        # No documents ingested in this session, go straight to web
+        return {"source": "WEB"}
+    
+    summary_text = "\n".join(
+        [f"- {s['filename']}: {s['summary']}" for s in summaries]
+    )
+    
+    history_text = format_chat_history(state.get('chat_history', []))
+    history_section = f"\nRecent conversation:\n{history_text}\n" if history_text else ""
+    
+    prompt = (
+        f"You are a routing assistant. Below are summaries of documents the user has uploaded:\n\n"
+        f"{summary_text}\n"
+        f"{history_section}\n"
+        f"User query: '{state['query']}'\n\n"
+        f"Based on the document summaries above, is this query likely answerable from the uploaded documents? "
+        f"Answer with ONLY 'PDF' or 'WEB'."
+    )
     decision = model.invoke(prompt).content.strip()
-    return {"source": decision}
+    
+    # Ensure we only get a valid routing value
+    if "PDF" in decision.upper():
+        return {"source": "PDF"}
+    return {"source": "WEB"}
 
 def retrieve_pdf(state: AgentState):
-    """RAG tool for the uploaded PDF using direct RPC to avoid LangChain bugs"""
+    """RAG tool for the uploaded PDF using direct RPC, scoped to the current session"""
     # 1. Generate the embedding for the user query
     query_embedding = embeddings.embed_query(state['query'])
     
-    # 2. Call the 'match_documents' function directly via Supabase client
-    # This bypasses the AttributeError in langchain-community
-    rpc_response = supabase.rpc("match_documents", {
+    # 2. Call the 'match_documents_by_session' function which filters by session_id
+    rpc_response = supabase.rpc("match_documents_by_session", {
         "query_embedding": query_embedding,
-        "match_threshold": 0.5, # Adjust this based on how strict you want the search
-        "match_count": 3
+        "match_threshold": 0.5,
+        "match_count": 3,
+        "p_session_id": state['session_id']
     }).execute()
     
     # 3. Process the results
@@ -49,8 +96,17 @@ def retrieve_pdf(state: AgentState):
         
     context = "\n".join([d['content'] for d in docs])
     
-    # 4. Generate answer using Gemini
-    response = model.invoke(f"Answer using this context:\n{context}\n\nQuestion: {state['query']}")
+    # 4. Build conversation history for context
+    history_text = format_chat_history(state.get('chat_history', []))
+    history_section = f"\nPrevious conversation:\n{history_text}\n" if history_text else ""
+    
+    # 5. Generate answer using Gemini with conversation memory
+    response = model.invoke(
+        f"You are a helpful assistant. Use the document context and conversation history to answer the user's question.\n"
+        f"{history_section}\n"
+        f"Document context:\n{context}\n\n"
+        f"Question: {state['query']}"
+    )
     return {"answer": response.content}
 
 def web_search(state: AgentState):
@@ -58,10 +114,16 @@ def web_search(state: AgentState):
     # .run() typically returns a formatted string of the top results
     results_text = search_tool.run(state['query'])
     
-    # Generate answer using Gemini
+    # Build conversation history for context
+    history_text = format_chat_history(state.get('chat_history', []))
+    history_section = f"\nPrevious conversation:\n{history_text}\n" if history_text else ""
+    
+    # Generate answer using Gemini with conversation memory
     response = model.invoke(
-        f"Based on these web results, answer the question: {state['query']}\n\n"
-        f"Results: {results_text}"
+        f"You are a helpful assistant. Use the web results and conversation history to answer the user's question.\n"
+        f"{history_section}\n"
+        f"Web results:\n{results_text}\n\n"
+        f"Question: {state['query']}"
     )
     return {"answer": response.content}
 
@@ -88,6 +150,15 @@ graph = workflow.compile()
 
 # 5. Execute
 if __name__ == "__main__":
-    query = input("\nHi! Ask me something about your PDF or the world: ")
-    output = graph.invoke({"query": query})
-    print(f"\n[Source: {output['source']}]\nAnswer: {output['answer']}")
+    import uuid
+    session_id = str(uuid.uuid4())
+    chat_history = []
+    print(f"Session ID: {session_id}")
+    while True:
+        query = input("\nHi! Ask me something (or type 'quit'): ")
+        if query.lower() in ('quit', 'exit', 'q'):
+            break
+        output = graph.invoke({"query": query, "session_id": session_id, "chat_history": chat_history})
+        print(f"\n[Source: {output['source']}]\nAnswer: {output['answer']}")
+        chat_history.append({"role": "user", "content": query})
+        chat_history.append({"role": "assistant", "content": output['answer']})
