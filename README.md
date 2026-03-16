@@ -178,8 +178,3 @@ python main.py
 - Add multi-document filtering by filename/topic
 - Add telemetry for retrieval hit rate and route accuracy
 
----
-
-## License
-
-Add a license file if you plan to open-source or distribute this project.
